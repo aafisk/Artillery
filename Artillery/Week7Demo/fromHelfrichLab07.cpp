@@ -12,10 +12,13 @@
  *****************************************************************/
 
 #include <cassert>      // for ASSERT
+#include "test.h"
 #include "uiInteract.h" // for INTERFACE
 #include "uiDraw.h"     // for RANDOM and DRAW*
 #include "ground.h"     // for GROUND
 #include "position.h"   // for POSITION
+
+
 using namespace std;
 
 /*************************************************************************
@@ -145,6 +148,9 @@ int WINAPI wWinMain(
 int main(int argc, char** argv)
 #endif // !_WIN32
 {
+    // Run tests
+    //TestRunner().run();
+
     // Initialize OpenGL
     Position ptUpperRight;
     ptUpperRight.setPixelsX(700.0);

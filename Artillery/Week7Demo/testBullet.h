@@ -11,7 +11,7 @@
 #include "bullet.h"
 #include <cassert>
 
-class TestBullet: Bullet
+class TestBullet
 {
 public:
 	void run()

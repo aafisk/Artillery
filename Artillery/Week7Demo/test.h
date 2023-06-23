@@ -11,4 +11,9 @@
 
 #pragma once
 
-void testRunner();
+class TestRunner {
+
+public:
+	void run();
+};
+

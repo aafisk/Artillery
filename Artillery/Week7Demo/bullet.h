@@ -13,12 +13,11 @@
 #include <queue>
 
 using namespace std;
-
-class BulletTest;
+class TestBullet;
 
 class Bullet
 {
-	friend BulletTest;
+	friend TestBullet;
 public:
 	Bullet();
 	Bullet(Position position, Velocity velocity);
