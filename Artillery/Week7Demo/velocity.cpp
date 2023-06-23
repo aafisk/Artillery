@@ -1,3 +1,12 @@
+/*********************************
+* Authors:
+*	Aaron Fisk
+*	Tim Orgill
+*
+* Project:
+*	Artillery Simulator
+***********************************/
+
 #include "velocity.h"
 
 Velocity::Velocity()

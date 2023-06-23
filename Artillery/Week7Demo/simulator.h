@@ -1,3 +1,12 @@
+/*********************************
+* Authors:
+*	Aaron Fisk
+*	Tim Orgill
+*
+* Project:
+*	Artillery Simulator
+***********************************/
+
 #pragma once
 #include "position.h"
 #include "physics.h"

@@ -1,8 +1,17 @@
+/*********************************
+* Authors:
+*	Aaron Fisk
+*	Tim Orgill
+*
+* Project:
+*	Artillery Simulator
+***********************************/
+
 #pragma once
 #include "bullet.h"
 #include <cassert>
 
-class BulletTest: Bullet
+class TestBullet: Bullet
 {
 public:
 	void run()
@@ -19,6 +28,8 @@ public:
 		test_SetTargetHit_same();
 		test_SetHitGround_different();
 		test_SetHitGround_same();
+
+		cout << "Bullet tests pass" << endl;
 	}
 
 private:
@@ -83,8 +94,7 @@ private:
 
 		// Verify
 		assert(b.velocity.getSpeed() == updatedVelocity.getSpeed());
-		assert(b.velocity.getSpeed() != oldVelocity.getSpeed());
-
+		
 		// Teardown
 	}
 

@@ -1,3 +1,12 @@
+/*********************************
+* Authors:
+*	Aaron Fisk
+*	Tim Orgill
+*
+* Project:
+*	Artillery Simulator
+***********************************/
+
 #pragma once
 #include "physics.h"
 #include <cassert>
@@ -61,6 +70,7 @@ public:
 		testLinearInterpolationValues_smallValue();
 		testLinearInterpolationValues_largeValue();
 
+		cout << "Physics tests pass" << endl;
 	}
 
 private:
