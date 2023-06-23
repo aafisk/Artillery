@@ -39,3 +39,6 @@ private:
 	bool hitGround;
 };
 
+// TODO - Add a struct to hold Position, Velocity, etc.
+//		- Figure out anything else that needs held in struct
+
