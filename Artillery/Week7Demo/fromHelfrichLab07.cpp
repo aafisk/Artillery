@@ -16,6 +16,7 @@
 #include "uiInteract.h" // for INTERFACE
 #include "uiDraw.h"     // for RANDOM and DRAW*
 #include "ground.h"     // for GROUND
+#include "howitzer.h"   // for HOWITZER
 #include "position.h"   // for POSITION
 
 
@@ -54,6 +55,7 @@ public:
     Position  projectilePath[20];  // path of the projectile
     Position  ptHowitzer;          // location of the howitzer
     Position  ptUpperRight;        // size of the screen
+    Howitzer howitzer;
     double angle;                  // angle of the howitzer 
     double time;                   // amount of time since the last firing
 };
@@ -76,6 +78,7 @@ void callBack(const Interface* pUI, void* p)
     //
 
     // move a large amount
+    /*
     if (pUI->isRight())
         pDemo->angle += 0.05;
     if (pUI->isLeft())
@@ -86,6 +89,7 @@ void callBack(const Interface* pUI, void* p)
         pDemo->angle += (pDemo->angle >= 0 ? -0.003 : 0.003);
     if (pUI->isDown())
         pDemo->angle += (pDemo->angle >= 0 ? 0.003 : -0.003);
+    */
 
     // fire that gun
     if (pUI->isSpace())

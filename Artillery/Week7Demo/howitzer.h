@@ -8,15 +8,18 @@ class Howitzer
 private:
 	double angle;
 	Position pos;
+	void draw(ogstream& og, double time);
 
 public:
 	Howitzer();
 	Howitzer(Position pos, double angle);
-	void draw(ogstream& og, double time);
-	void rotateClock();
-	void rotateCounterClock();
+	void rotateUp();
+	void rotateDown();
+	void rotateRight();
+	void rotateLeft();
+	void fire(double time);
 	double getAngle();
 	Position getPosition();
-	void setPosition(Position pos);
+	void setPosition(double x, double y);
 };
 
