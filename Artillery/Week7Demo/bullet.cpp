@@ -23,11 +23,23 @@ Bullet::Bullet(Position position, Velocity velocity)
 	bool isAirborne = true;
 	bool targetHit = false;
 	bool hitGround = false;
+
 }
 
-void Bullet::draw()
+
+/**************************************
+* Draw the bullet to the screen
+**************************************/
+void Bullet::draw(ogstream& gout)
 {
-	// Draw stuff
+	trail.push_back(position);
+
+	// Draw the bullet and the trail 
+	for (int i = 0; (trail.size() < 20) ? i < trail.size() : i < 20; i++)
+	{
+		Position current = trail[trail.size() - i];
+		gout.drawProjectile(current, 0.5 * (double)i);
+	}
 }
 
 void Bullet::updatePosition(Position position) { this->position = position; }

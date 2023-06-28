@@ -10,7 +10,8 @@
 #pragma once
 #include "position.h"
 #include "velocity.h"
-#include <queue>
+#include "uiDraw.h"
+#include <vector>
 
 using namespace std;
 class TestBullet;
@@ -21,7 +22,7 @@ class Bullet
 public:
 	Bullet();
 	Bullet(Position position, Velocity velocity);
-	void draw();
+	void draw(ogstream& gout);
 	void updatePosition(Position position);
 	void updateVelocity(Velocity velocity);
 	double getVelocity();
@@ -32,7 +33,7 @@ public:
 
 private:
 	Position position;
-	queue<Position> trail;
+	vector<Position> trail;
 	Velocity velocity;
 	bool isAirborne;
 	bool targetHit;
