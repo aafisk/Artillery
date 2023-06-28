@@ -133,6 +133,7 @@
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="fromHelfrichLab07.cpp" />
     <ClCompile Include="ground.cpp" />
+    <ClCompile Include="howitzer.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="simulator.cpp" />
@@ -144,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="howitzer.h" />
     <ClInclude Include="testBullet.h" />
     <ClInclude Include="ground.h" />
     <ClInclude Include="physics.h" />

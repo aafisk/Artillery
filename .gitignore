@@ -396,3 +396,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+Artillery/Week7Demo/Week7Demo.vcxproj.filters
+Artillery/Week7Demo/Week7Demo.vcxproj

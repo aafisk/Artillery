@@ -48,6 +48,9 @@
     <ClCompile Include="fromHelfrichLab07.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="howitzer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="position.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="uiInteract.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="howitzer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
