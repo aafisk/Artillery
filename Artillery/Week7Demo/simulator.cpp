@@ -20,6 +20,7 @@
 #include "howitzer.h"   // for HOWITZER
 #include "position.h"   // for POSITION
 
+#define MUZZLE_VELOCITY 827.0
 
 using namespace std;
 
@@ -37,9 +38,12 @@ public:
         //angle(0.0)
     {
         // Set the horizontal position of the howitzer. This should be random.
+        //howitzer.setHorizontalPosition(ptUpperRight);
         ptHowitzer.setPixelsX(Position(ptUpperRight).getPixelsX() / 2.0);
 
         // Generate the ground and set the vertical position of the howitzer.
+        //Position* posHowitzer = howitzer.getPosition();
+        /*cout << posHowitzer.getMetersX() << ", " << posHowitzer.getMetersY();*/
         ground.reset(ptHowitzer);
 
         // This is to make the bullet travel across the screen. Notice how there are 
@@ -52,14 +56,14 @@ public:
         }
     }
 
-    Ground ground;                 // the ground
-    Position  projectilePath[20];  // path of the projectile
-    Position  ptHowitzer;          // location of the howitzer
-    Position  ptUpperRight;        // size of the screen
-    Bullet bullet;
-    Howitzer howitzer;             // Howitzer object
-    Physics physics;               // All the phyics and other calc
-    double time;                   // amount of time since the last firing
+    Ground ground;                      // the ground
+    Position  projectilePath[20];       // path of the projectile
+    Position  ptHowitzer;               // location of the howitzer
+    Position  ptUpperRight;             // size of the screen
+    Bullet bullet;                      // Bullet object
+    Howitzer howitzer;                  // Howitzer object
+    Physics physics;                    // All the phyics and other calc
+    double time;                        // amount of time since the last firing
 };
 
 /*************************************
@@ -98,8 +102,12 @@ void callBack(const Interface* pUI, void* p)
     // fire that gun
     if (pUI->isSpace())
     {
-        pDemo->howitzer.fire();
-        pDemo->bullet(Position(0.0, 0.0), Velocity(0.0, 0.0));
+        //physics.computeHorizontalComponent(pDemo->howitzer.getAngle(), MUZZLE_VELOCITY);
+		//physics.computeVerticalComponent(pDemo->howitzer.getAngle(), MUZZLE_VELOCITY);
+        //pDemo->howitzer.fire();
+        //pDemo->bullet.launch(pDemo->howitzer.getPosition(), 
+        //    (physics.computeHorizontalComponent(pDemo->howitzer.getAngle(), MUZZLE_VELOCITY), 
+        //    physics.computeVerticalComponent(pDemo->howitzer.getAngle(), MUZZLE_VELOCITY)));
         pDemo->time = 0.0;
     }
 
@@ -134,9 +142,8 @@ void callBack(const Interface* pUI, void* p)
     //gout.drawHowitzer(pDemo->ptHowitzer, pDemo->angle, pDemo->time);
     pDemo->howitzer.draw(gout, pDemo->ptHowitzer, pDemo->time);
 
-    // draw the projectile
-    for (int i = 0; i < 20; i++)
-        gout.drawProjectile(pDemo->projectilePath[i], 0.5 * (double)i);
+    // draw the projectile and its trail
+    // pDemo->bullet.draw(gout);
 
     // draw some text on the screen
     gout.setf(ios::fixed | ios::showpoint);

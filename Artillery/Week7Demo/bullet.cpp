@@ -53,10 +53,10 @@ void Bullet::setTargetHit(bool targetHit) { this->targetHit = targetHit; }
 
 void Bullet::setHitGround(bool groundHit) { this->hitGround = groundHit; }
 
-void Bullet::launch(Position howitzerLocation)
+void Bullet::launch(Position howitzerLocation, Velocity muzzleVelocity)
 {
 	position = howitzerLocation;
-	velocity = 
+	velocity = muzzleVelocity;
 }
 
 void Bullet::determineImpact()

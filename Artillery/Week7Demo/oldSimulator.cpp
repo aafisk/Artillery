@@ -7,7 +7,7 @@
 *	Artillery Simulator
 ***********************************/
 
-#include "simulator.h"
+#include "oldSimulator.h"
 
 Simulator::Simulator()
 {

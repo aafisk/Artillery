@@ -13,8 +13,6 @@
 #include "uiDraw.h"
 #include <vector>
 
-#define 
-
 using namespace std;
 class TestBullet;
 
@@ -31,7 +29,7 @@ public:
 	void setIsAirborne(bool isAirborne);
 	void setTargetHit(bool targetHit);
 	void setHitGround(bool groundHit);
-	void launch(Position howitzerLocation);
+	void launch(Position howitzerLocation, Velocity muzzleVelocity);
 	void determineImpact();
 
 private:

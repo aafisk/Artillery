@@ -11,15 +11,15 @@ private:
 
 public:
 	Howitzer();
-	Howitzer(Position pos, double angle);
+	Howitzer(Position pos);
 	void rotateUp();
 	void rotateDown();
 	void rotateRight();
 	void rotateLeft();
-	void fire();
-	void draw(ogstream& og, Position pos, double time);
+	//void fire();
+	void draw(ogstream& og, Position position, double time);
 	double getAngle();
 	Position getPosition();
-	void setPosition(double x, double y);
+	void setHorizontalPosition(Position position);
 };
 

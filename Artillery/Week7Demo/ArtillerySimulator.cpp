@@ -9,7 +9,7 @@
 
 #include "position.h"
 #include "physics.h"
-#include "simulator.h"
+#include "oldSimulator.h"
 #include "testPhysics.h"
 #include "testBullet.h"
 
