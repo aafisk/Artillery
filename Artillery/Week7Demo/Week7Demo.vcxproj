@@ -131,12 +131,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
-    <ClCompile Include="fromHelfrichLab07.cpp" />
+    <ClCompile Include="simulator.cpp" />
     <ClCompile Include="ground.cpp" />
     <ClCompile Include="howitzer.cpp" />
     <ClCompile Include="physics.cpp" />
     <ClCompile Include="position.cpp" />
-    <ClCompile Include="simulator.cpp" />
+    <ClCompile Include="oldSimulator.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="uiDraw.cpp" />
     <ClCompile Include="uiInteract.cpp" />
@@ -150,7 +150,7 @@
     <ClInclude Include="ground.h" />
     <ClInclude Include="physics.h" />
     <ClInclude Include="position.h" />
-    <ClInclude Include="simulator.h" />
+    <ClInclude Include="oldSimulator.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="testGround.h" />
     <ClInclude Include="testPhysics.h" />

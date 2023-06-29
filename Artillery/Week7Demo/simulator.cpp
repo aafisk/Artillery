@@ -1,151 +1,184 @@
-/*********************************
-* Authors:
-*	Aaron Fisk
-*	Tim Orgill
-*
-* Project:
-*	Artillery Simulator
-***********************************/
+/*************************************************************
+ * 1. Name:
+ *      The Key
+ * 2. Assignment Name:
+ *      Lab 08: M777 Howitzer
+ * 3. Assignment Description:
+ *      Simulate firing the M777 howitzer 15mm artillery piece
+ * 4. What was the hardest part? Be as specific as possible.
+ *      ??
+ * 5. How long did it take for you to complete the assignment?
+ *      ??
+ *****************************************************************/
 
-#include "simulator.h"
+#include <cassert>      // for ASSERT
+#include "test.h"
+#include "uiInteract.h" // for INTERFACE
+#include "uiDraw.h"     // for RANDOM and DRAW*
+#include "bullet.h"     // for BULLET
+#include "ground.h"     // for GROUND
+#include "howitzer.h"   // for HOWITZER
+#include "position.h"   // for POSITION
 
-Simulator::Simulator()
+
+using namespace std;
+
+/*************************************************************************
+ * Demo
+ * Test structure to capture the LM that will move around the screen
+ *************************************************************************/
+class Demo
 {
-    hangTime = 0.0;
-    interval = 0.01;
-    diameterOfShell = 0.15489; // m
-    radius = diameterOfShell / 2;
-    shellMass = 46.7; // kg
-    initialVelocity = 827.0; // m/s (upon firing)
-    //position = Position(0.0, 0.0);
-    ddx = 0.0;
-    ddy = 0.0;
-    velocity = initialVelocity;
-    altitude = position.getMetersY();
-    surfaceArea = physics.areaFromRadius(radius);
-    airDensity = physics.airDensityFromAltitude(altitude);
-    machAtAltitude = physics.speedOfSoundFromAltitude(altitude);
-    mach = velocity / machAtAltitude;
-    dragCoefficient = physics.dragFromMach(mach);
-    flightPath = { 0.0, 0.0, 0.0, 0.0 };
-}
-void Simulator::resetVariables()
-{
-    Position position(0.0, 0.0);
-    hangTime = 0.0;
-    interval = 0.01;
-    diameterOfShell = 0.15489; // m
-    radius = diameterOfShell / 2;
-    shellMass = 46.7; // kg
-    initialVelocity = 827.0; // m/s (upon firing)
-    //position = Position(0.0, 0.0);
-    ddx = 0.0;
-    ddy = 0.0;
-    velocity = initialVelocity;
-    altitude = position.getMetersY();
-    surfaceArea = physics.areaFromRadius(radius);
-    airDensity = physics.airDensityFromAltitude(altitude);
-    machAtAltitude = physics.speedOfSoundFromAltitude(altitude);
-    mach = velocity / machAtAltitude;
-    dragCoefficient = physics.dragFromMach(mach);
-    flightPath = { 0.0, 0.0, 0.0, 0.0 };
-
-    //cout << "hangTime: " << hangTime << endl;
-    //cout << "interval: " << interval << endl;
-    //cout << "diameterOfShell: " << diameterOfShell << endl;
-    //cout << "radius: " << radius << endl;
-    //cout << "shellMass: " << shellMass << endl;
-    //cout << "initialVelocity: " << initialVelocity << endl;
-    //// cout << "position: (" << position.getX() << ", " << position.getY() << ")" << endl;
-    //cout << "ddx: " << ddx << endl;
-    //cout << "ddy: " << ddy << endl;
-    //cout << "velocity: " << velocity << endl;
-    //cout << "altitude: " << altitude << endl;
-    //cout << "surfaceArea: " << surfaceArea << endl;
-    //cout << "airDensity: " << airDensity << endl;
-    //cout << "machAtAltitude: " << machAtAltitude << endl;
-    //cout << "mach: " << mach << endl;
-    //cout << "dragCoefficient: " << dragCoefficient << endl;
-}
-
-void Simulator::run(double angle)
-{
-    resetVariables();
-    aRadians = physics.radiansFromDegrees(angle);
-	dx = physics.computeHorizontalComponent(aRadians, initialVelocity);
-	dy = physics.computeVerticalComponent(aRadians, initialVelocity);
-
-    while (position.getMetersY() >= 0.0)
+public:
+    Demo(Position ptUpperRight) :
+        ptUpperRight(ptUpperRight),
+        ground(ptUpperRight),
+        time(0.0)
+        //angle(0.0)
     {
-        // Various environmental factors
-        velocity = physics.computeTotalComponent(dx, dy);
-        airDensity = physics.airDensityFromAltitude(altitude);
-        machAtAltitude = physics.speedOfSoundFromAltitude(altitude);
-        mach = velocity / machAtAltitude;
-        //cout << "mach: " << mach;
-        dragCoefficient = physics.dragFromMach(mach);
+        // Set the horizontal position of the howitzer. This should be random.
+        ptHowitzer.setPixelsX(Position(ptUpperRight).getPixelsX() / 2.0);
 
-        // Acceleration
-        // Expected: Distance: 19988.3m   Altitude: -1.50481m   Hang Time: 37.01s
-        ddx = physics.forceFromDrag(dragCoefficient, airDensity, dx, velocity, surfaceArea) / shellMass;
+        // Generate the ground and set the vertical position of the howitzer.
+        ground.reset(ptHowitzer);
 
-        ddy = physics.gravityFromAltitude(altitude) +
-            physics.forceFromDrag(dragCoefficient, airDensity, dy, velocity, surfaceArea) / shellMass;
-
-         //cout << "\tddx/ddy: " << ddx  << "/" << ddy;
-
-
-        // Velocity
-        dx = physics.computeVelocity(dx, ddx, interval);
-        dy = physics.computeVelocity(dy, ddy, interval);
-
-         //cout << "\dx/dy: " << dx << "/" << dy;
-
-        // velocity = physics.computeTotalComponent(dx, dy)
-
-        // Calculate horizontal and vertical distance
-        double x = physics.computeDistance(position.getMetersX(), dx, ddx, interval);
-        double y = physics.computeDistance(altitude, dy, ddy, interval);
-
-        // Update position
-        position.setMetersX(x);
-        position.setMetersY(y);
-
-         //cout << "\tx/y: " << x << "/" << y << endl;
-
-        // Update altitude
-        altitude = position.getMetersY();
-
-        hangTime += interval;
-
-        // Previous and current distance for interpolation
-        flightPath[0] = flightPath[1];
-        flightPath[1] = position.getMetersX();
-
-        // Previous and current altitude for interpolation
-        flightPath[2] = flightPath[3];
-        flightPath[3] = position.getMetersY();
-
-        //cout << "Distance: " << position.getMetersX() << " m"
-        //    << "\tAltitude: " << position.getMetersY() << " m"
-        //    << "\tHang Time: " << hangTime << " s" << endl;
-
+        // This is to make the bullet travel across the screen. Notice how there are 
+        // 20 pixels, each with a different age. This gives the appearance
+        // of a trail that fades off in the distance.
+        for (int i = 0; i < 20; i++)
+        {
+            projectilePath[i].setPixelsX((double)i * 2.0);
+            projectilePath[i].setPixelsY(ptUpperRight.getPixelsY() / 1.5);
+        }
     }
 
-    // Perform linear interpolation to find distance and time upon ground 
-    // impact
-    position.setMetersX(physics.linearInterpolation(
-        flightPath[0], flightPath[1], flightPath[2], flightPath[3], 0.0));
+    Ground ground;                 // the ground
+    Position  projectilePath[20];  // path of the projectile
+    Position  ptHowitzer;          // location of the howitzer
+    Position  ptUpperRight;        // size of the screen
+    Bullet bullet;
+    Howitzer howitzer;             // Howitzer object
+    Physics physics;               // All the phyics and other calc
+    double time;                   // amount of time since the last firing
+};
 
-    hangTime = physics.linearInterpolation(
-        hangTime - 0.01, hangTime, flightPath[2], flightPath[3], 0.0);
+/*************************************
+ * All the interesting work happens here, when
+ * I get called back from OpenGL to draw a frame.
+ * When I am finished drawing, then the graphics
+ * engine will wait until the proper amount of
+ * time has passed and put the drawing on the screen.
+ **************************************/
+void callBack(const Interface* pUI, void* p)
+{
+    // the first step is to cast the void pointer into a game object. This
+    // is the first step of every single callback function in OpenGL. 
+    Demo* pDemo = (Demo*)p;
 
-    cout.setf(ios::fixed | ios::showpoint);
-    cout.precision(1);
+    //
+    // accept input
+    //
 
-    // Stats at ground impact
-    cout << "Distance: " << position.getMetersX() << " m"
-        << "\tHang Time: " << hangTime << " s" << endl;
+    // move a large amount
+    if (pUI->isRight())
+        //pDemo->angle += 0.05;
+        pDemo->howitzer.rotateRight();
+    if (pUI->isLeft())
+        //pDemo->angle -= 0.05;
+        pDemo->howitzer.rotateLeft();
+    // move by a little
+    if (pUI->isUp())
+        //pDemo->angle += (pDemo->angle >= 0 ? -0.003 : 0.003);
+        pDemo->howitzer.rotateUp();
+    if (pUI->isDown())
+        //pDemo->angle += (pDemo->angle >= 0 ? 0.003 : -0.003);
+        pDemo->howitzer.rotateDown();
+    
+
+    // fire that gun
+    if (pUI->isSpace())
+    {
+        pDemo->howitzer.fire();
+        pDemo->bullet(Position(0.0, 0.0), Velocity(0.0, 0.0));
+        pDemo->time = 0.0;
+    }
+
+    //
+    // perform all the game logic
+    //
+
+    // advance time by half a second.
+    pDemo->time += 0.5;
+
+    // move the projectile across the screen
+    for (int i = 0; i < 20; i++)
+    {
+        // this bullet is moving left at 1 pixel per frame
+        double x = pDemo->projectilePath[i].getPixelsX();
+        x -= 1.0;
+        if (x < 0)
+            x = pDemo->ptUpperRight.getPixelsX();
+        pDemo->projectilePath[i].setPixelsX(x);
+    }
+
+    //
+    // draw everything
+    //
+
+    ogstream gout(Position(10.0, pDemo->ptUpperRight.getPixelsY() - 20.0));
+
+    // draw the ground first
+    pDemo->ground.draw(gout);
+
+    // draw the howitzer
+    //gout.drawHowitzer(pDemo->ptHowitzer, pDemo->angle, pDemo->time);
+    pDemo->howitzer.draw(gout, pDemo->ptHowitzer, pDemo->time);
+
+    // draw the projectile
+    for (int i = 0; i < 20; i++)
+        gout.drawProjectile(pDemo->projectilePath[i], 0.5 * (double)i);
+
+    // draw some text on the screen
+    gout.setf(ios::fixed | ios::showpoint);
+    gout.precision(1);
+    gout << "Time since the bullet was fired: "
+        << pDemo->time << "s\n";
 }
 
+double Position::metersFromPixels = 40.0;
 
+/*********************************
+ * Initialize the simulation and set it in motion
+ *********************************/
+#ifdef _WIN32_X
+#include <windows.h>
+int WINAPI wWinMain(
+    _In_ HINSTANCE hInstance,
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ PWSTR pCmdLine,
+    _In_ int nCmdShow)
+#else // !_WIN32
+int main(int argc, char** argv)
+#endif // !_WIN32
+{
+    // Run tests
+    //TestRunner().run();
+
+    // Initialize OpenGL
+    Position ptUpperRight;
+    ptUpperRight.setPixelsX(700.0);
+    ptUpperRight.setPixelsY(500.0);
+    Position().setZoom(40.0 /* 42 meters equals 1 pixel */);
+    Interface ui(0, NULL,
+        "Demo",   /* name on the window */
+        ptUpperRight);
+
+    // Initialize the demo
+    Demo demo(ptUpperRight);
+
+    // set everything into action
+    ui.run(callBack, &demo);
+
+
+    return 0;
+}

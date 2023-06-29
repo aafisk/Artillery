@@ -23,7 +23,6 @@ Bullet::Bullet(Position position, Velocity velocity)
 	bool isAirborne = true;
 	bool targetHit = false;
 	bool hitGround = false;
-
 }
 
 
@@ -53,6 +52,12 @@ void Bullet::setIsAirborne(bool isAirborne) { this->isAirborne = isAirborne; }
 void Bullet::setTargetHit(bool targetHit) { this->targetHit = targetHit; }
 
 void Bullet::setHitGround(bool groundHit) { this->hitGround = groundHit; }
+
+void Bullet::launch(Position howitzerLocation)
+{
+	position = howitzerLocation;
+	velocity = 
+}
 
 void Bullet::determineImpact()
 {

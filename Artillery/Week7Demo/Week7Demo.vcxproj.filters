@@ -24,7 +24,7 @@
     <ClCompile Include="physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="simulator.cpp">
+    <ClCompile Include="oldSimulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="bullet.cpp">
@@ -45,7 +45,7 @@
     <ClCompile Include="uiInteract.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="fromHelfrichLab07.cpp">
+    <ClCompile Include="simulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="howitzer.cpp">
@@ -59,7 +59,7 @@
     <ClInclude Include="physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="simulator.h">
+    <ClInclude Include="oldSimulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="testBullet.h">

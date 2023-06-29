@@ -13,7 +13,7 @@ Howitzer::Howitzer(Position pos, double angle)
 	pos.setPixelsX(Position(pos).getPixelsX() / 2.0);
 }
 
-void Howitzer::draw(ogstream& og, double time)
+void Howitzer::draw(ogstream& og, Position pos, double time)
 {
 	og.drawHowitzer(pos, angle, time);
 }
@@ -38,10 +38,9 @@ void Howitzer::rotateLeft()
 	angle -= 0.05;
 }
 
-void Howitzer::fire(double time)
+void Howitzer::fire()
 {
-	//ogstream& og;
-	//draw(og, time);
+	
 }
 
 double Howitzer::getAngle()
