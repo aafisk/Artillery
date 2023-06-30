@@ -71,7 +71,7 @@ Position Ground::getTarget() const
  * reset because only then can we know its elevation. posHowitzer is by-reference
  * and not const-by-reference for this purpose.
  *************************************************************************/
-void Ground::reset(Position& posHowitzer)
+double Ground::reset(Position posHowitzer)
 {
     // remember the integer width for later. It will come in handy
     int width = (int)posUpperRight.getPixelsX();
@@ -122,7 +122,8 @@ void Ground::reset(Position& posHowitzer)
     }
 
     // set the howitzer's elevation
-    posHowitzer.setPixelsY(ground[iHowitzer]);
+    // posHowitzer.setPixelsY(ground[iHowitzer]);
+    return ground[iHowitzer];
 }
 
 /*****************************************************************

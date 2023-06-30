@@ -36,7 +36,7 @@ void Bullet::draw(ogstream& gout)
 	// Draw the bullet and the trail 
 	for (int i = 0; (trail.size() < 20) ? i < trail.size() : i < 20; i++)
 	{
-		Position current = trail[trail.size() - i];
+		Position current = trail[trail.size() - i - 1];
 		gout.drawProjectile(current, 0.5 * (double)i);
 	}
 }
@@ -47,11 +47,28 @@ void Bullet::updateVelocity(Velocity velocity) { this->velocity = velocity; }
 
 double Bullet::getVelocity() { return velocity.getSpeed(); }
 
+double Bullet::getDx() { return velocity.getDx(); }
+
+double Bullet::getDy() { return velocity.getDy(); }
+
+Position Bullet::getPosition() { return position; }
+
 void Bullet::setIsAirborne(bool isAirborne) { this->isAirborne = isAirborne; }
 
 void Bullet::setTargetHit(bool targetHit) { this->targetHit = targetHit; }
 
 void Bullet::setHitGround(bool groundHit) { this->hitGround = groundHit; }
+
+bool Bullet::getIsAirborne() { return isAirborne; }
+
+/******************************************
+mostRecent = [bullet head, bullet head - 1]
+*******************************************/
+vector<Position> Bullet::getTrailForInterpolation()
+{
+	vector<Position> mostRecent = {trail[trail.size() - 1], trail[trail.size() - 2] };
+	return mostRecent;
+}
 
 void Bullet::launch(Position howitzerLocation, Velocity muzzleVelocity)
 {

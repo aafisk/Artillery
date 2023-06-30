@@ -26,9 +26,14 @@ public:
 	void updatePosition(Position position);
 	void updateVelocity(Velocity velocity);
 	double getVelocity();
+	double getDx();
+	double getDy();
+	Position getPosition();
 	void setIsAirborne(bool isAirborne);
 	void setTargetHit(bool targetHit);
 	void setHitGround(bool groundHit);
+	bool getIsAirborne();
+	vector<Position> getTrailForInterpolation();
 	void launch(Position howitzerLocation, Velocity muzzleVelocity);
 	void determineImpact();
 

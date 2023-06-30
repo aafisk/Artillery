@@ -27,7 +27,7 @@ public:
 	Ground() : ground(nullptr), iHowitzer(0), iTarget(0) {}
 
 	// reset the ground and set the vertical position of the howitzer
-	void reset(Position& posHowitzer);
+	double reset(Position posHowitzer);
 
 	// draw the ground on the screen
 	void draw(ogstream& gout) const;

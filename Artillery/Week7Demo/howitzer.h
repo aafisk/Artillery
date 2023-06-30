@@ -17,9 +17,10 @@ public:
 	void rotateRight();
 	void rotateLeft();
 	//void fire();
-	void draw(ogstream& og, Position position, double time);
+	void draw(ogstream& og, double time);
 	double getAngle();
 	Position getPosition();
 	void setHorizontalPosition(Position position);
+	void setVerticalPosition(double yValue);
 };
 

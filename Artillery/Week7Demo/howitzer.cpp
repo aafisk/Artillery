@@ -14,9 +14,9 @@ Howitzer::Howitzer(Position position)
 	pos.setPixelsY(0.0);
 }
 
-void Howitzer::draw(ogstream& og, Position position, double time)
+void Howitzer::draw(ogstream& og, double time)
 {
-	og.drawHowitzer(position, angle, time);
+	og.drawHowitzer(pos, angle, time);
 }
 
 void Howitzer::rotateUp()
@@ -57,4 +57,9 @@ Position Howitzer::getPosition()
 void Howitzer::setHorizontalPosition(Position position)
 {
 	pos.setPixelsX(Position(position).getPixelsX() / 2.0);
+}
+
+void Howitzer::setVerticalPosition(double yValue)
+{
+	pos.setPixelsY(yValue);
 }
