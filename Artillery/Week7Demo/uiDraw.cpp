@@ -331,7 +331,7 @@ void ogstream::drawHowitzer(const Position& pos, double angle, double age)
         drawQuad(muzzle[i], pos, angle);
 
     // Now for the muzzle flash
-    if (age >= 0.0 && age < 2.0) // flash duration in seconds
+    if (age > 0.0 && age < 2.0) // flash duration in seconds
     {
         // draw the muzzle flash
         glBegin(GL_LINES);

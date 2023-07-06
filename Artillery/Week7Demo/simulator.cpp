@@ -49,10 +49,7 @@ public:
         /*cout << posHowitzer.getMetersX() << ", " << posHowitzer.getMetersY();*/
         //ground.reset(ptHowitzer);
         double howitzerElevation = ground.reset(howitzer.getPosition());
-        cout << "Position: " << howitzer.getPosition().getPixelsX()
-            << "Elevation before: " << howitzerElevation << endl;
         howitzer.setVerticalPosition(howitzerElevation);
-        cout << "Elevation after: " << howitzer.getPosition().getPixelsY();
 
         // This is to make the bullet travel across the screen. Notice how there are 
         // 20 pixels, each with a different age. This gives the appearance
@@ -197,15 +194,38 @@ void callBack(const Interface* pUI, void* p)
 
      }
 
+ 
+
+    // Check if the ground is hit
+
+    if (pDemo->ground.getElevationMeters(pDemo->bullet.getPosition()) > pDemo->bullet.getPosition().getMetersY())
+    {
+        pDemo->bullet.setIsAirborne(false);
+
+        pDemo->bullet.setHitGround(true);
+        pDemo->time = 0.0;
+
+        // Check if the target is hit
+        if ((pDemo->ground.getTarget().getPixelsX() + 5 > pDemo->bullet.getPosition().getPixelsX() &&
+			pDemo->ground.getTarget().getPixelsX() - 5 < pDemo->bullet.getPosition().getPixelsX()))
+		{
+			pDemo->bullet.setTargetHit(true);
+			cout << "target" << endl;
+		}
+    }
+
 
     // advance time by half a second.
-    pDemo->time += 0.5;
+    if (pDemo->bullet.getIsAirborne())
+        pDemo->time += 0.5;
 
     //
     // draw everything
     //
 
-    ogstream gout(Position(10.0, pDemo->ptUpperRight.getPixelsY() - 20.0));
+    // ***************************************************************************************88
+    // TO-DO
+    ogstream gout(Position(pDemo->ptUpperRight.getPixelsY() - 50.0, pDemo->ptUpperRight.getPixelsY() - 20.0));
 
     // draw the ground first
     pDemo->ground.draw(gout);
@@ -217,11 +237,28 @@ void callBack(const Interface* pUI, void* p)
     // draw the projectile and its trail
     pDemo->bullet.draw(gout);
 
+
+    /* 
+    Draw the stats
+    */
     // draw some text on the screen
     gout.setf(ios::fixed | ios::showpoint);
-    gout.precision(1);
-    gout << "Time since the bullet was fired: "
-        << pDemo->time << "s\n";
+	gout.precision(2);
+    //gout << "Time since the bullet was fired: "
+    //    << pDemo->time << "s\n";
+
+	// Draw the HUD
+	//gout.setPosition(Point(15.0, 400.0 - 15.0));
+
+    double horizontalDistanceTraveled = pDemo->bullet.getPosition().getMetersX() - pDemo->howitzer.getPosition().getMetersX();
+
+	// Set decimal precision
+	//gout.setf(ios::fixed);
+
+	gout << "Altitude:       " << pDemo->bullet.getPosition().getMetersY() << " m\n" <<
+		"Speed:  " << pDemo->bullet.getVelocity() << " m/s\n"                                   
+		"Distance:    " << horizontalDistanceTraveled << "m\n"               
+	    "Hang Time: " << pDemo->time << "seconds\n";
 }
 
 double Position::metersFromPixels = 40.0;

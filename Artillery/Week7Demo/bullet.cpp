@@ -11,7 +11,7 @@
 
 Bullet::Bullet()
 {
-	isAirborne = true;
+	isAirborne = false;
 	targetHit = false;
 	hitGround = false;
 }
@@ -74,6 +74,7 @@ void Bullet::launch(Position howitzerLocation, Velocity muzzleVelocity)
 {
 	position = howitzerLocation;
 	velocity = muzzleVelocity;
+	isAirborne = true;
 }
 
 void Bullet::determineImpact()
