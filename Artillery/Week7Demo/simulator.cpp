@@ -210,7 +210,11 @@ void callBack(const Interface* pUI, void* p)
 			pDemo->ground.getTarget().getPixelsX() - 5 < pDemo->bullet.getPosition().getPixelsX()))
 		{
 			pDemo->bullet.setTargetHit(true);
-			cout << "target" << endl;
+
+            // Reset the ground after the target is hit
+            double howitzerElevation = pDemo->ground.reset(pDemo->howitzer.getPosition());
+            pDemo->howitzer.setVerticalPosition(howitzerElevation);
+            pDemo->bullet.setTargetHit(false);
 		}
     }
 
