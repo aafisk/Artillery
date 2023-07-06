@@ -201,11 +201,6 @@ void callBack(const Interface* pUI, void* p)
     // advance time by half a second.
     pDemo->time += 0.5;
 
-    // move the projectile across the screen
-    for (int i = 0; i < 20; i++)
-    {
-    }
-
     //
     // draw everything
     //
