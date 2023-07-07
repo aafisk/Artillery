@@ -245,24 +245,28 @@ void callBack(const Interface* pUI, void* p)
     /* 
     Draw the stats
     */
-    // draw some text on the screen
-    gout.setf(ios::fixed | ios::showpoint);
-	gout.precision(2);
-    //gout << "Time since the bullet was fired: "
-    //    << pDemo->time << "s\n";
 
 	// Draw the HUD
-	//gout.setPosition(Point(15.0, 400.0 - 15.0));
+    ogstream sout(Position(22000.0, 19500));
+    sout.setf(ios::fixed | ios::showpoint);
+	sout.precision(2);
 
     double horizontalDistanceTraveled = pDemo->bullet.getPosition().getMetersX() - pDemo->howitzer.getPosition().getMetersX();
 
 	// Set decimal precision
 	//gout.setf(ios::fixed);
-
-	gout << "Altitude:       " << pDemo->bullet.getPosition().getMetersY() << " m\n" <<
-		"Speed:  " << pDemo->bullet.getVelocity() << " m/s\n"                                   
-		"Distance:    " << horizontalDistanceTraveled << "m\n"               
-	    "Hang Time: " << pDemo->time << "seconds\n";
+    if (pDemo->bullet.getIsAirborne() == true)
+    {
+        sout << 
+            "Altitude:       " << pDemo->bullet.getPosition().getMetersY() << " m\n" <<
+            "Speed:        " << pDemo->bullet.getVelocity() << " m/s\n"
+            "Distance:     " << horizontalDistanceTraveled << " m\n"
+            "Hang Time:  " << pDemo->time << " s\n";
+    }
+    else
+    {
+        sout << "Angle: " << pDemo->howitzer.getAngle() << endl;
+    }
 }
 
 double Position::metersFromPixels = 40.0;
