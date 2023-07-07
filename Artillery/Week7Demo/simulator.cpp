@@ -84,7 +84,6 @@ void callBack(const Interface* pUI, void* p)
     // the first step is to cast the void pointer into a game object. This
     // is the first step of every single callback function in OpenGL. 
     Demo* pDemo = (Demo*)p;
-    //Physics p = pDemo->physics;
 
     //
     // accept input
@@ -92,25 +91,18 @@ void callBack(const Interface* pUI, void* p)
 
     // move a large amount
     if (pUI->isRight())
-        //pDemo->angle += 0.05;
         pDemo->howitzer.rotateRight();
     if (pUI->isLeft())
-        //pDemo->angle -= 0.05;
         pDemo->howitzer.rotateLeft();
     // move by a little
     if (pUI->isUp())
-        //pDemo->angle += (pDemo->angle >= 0 ? -0.003 : 0.003);
         pDemo->howitzer.rotateUp();
     if (pUI->isDown())
-        //pDemo->angle += (pDemo->angle >= 0 ? 0.003 : -0.003);
         pDemo->howitzer.rotateDown();
     
     // fire that gun
-    if (pUI->isSpace())
+    if (pUI->isSpace() && !pDemo->bullet.getIsAirborne())
     {
-        //physics.computeHorizontalComponent(pDemo->howitzer.getAngle(), MUZZLE_VELOCITY);
-		//physics.computeVerticalComponent(pDemo->howitzer.getAngle(), MUZZLE_VELOCITY);
-        //pDemo->howitzer.fire();
         pDemo->bullet.launch(pDemo->howitzer.getPosition(), 
             Velocity(pDemo->physics.computeHorizontalComponent(pDemo->howitzer.getAngle(), MUZZLE_VELOCITY), 
             pDemo->physics.computeVerticalComponent(pDemo->howitzer.getAngle(), MUZZLE_VELOCITY)));
@@ -125,7 +117,6 @@ void callBack(const Interface* pUI, void* p)
     if (pDemo->bullet.getIsAirborne())
     {
         // Various environmental factors
-        // double velocity = pDemo->physics.computeTotalComponent(dx, dy);
         double altitude = pDemo->bullet.getPosition().getMetersY();
         Velocity velocity;
         double dx = pDemo->bullet.getDx();
@@ -136,18 +127,14 @@ void callBack(const Interface* pUI, void* p)
         double airDensity = pDemo->physics.airDensityFromAltitude(altitude);
         double machAtAltitude = pDemo->physics.speedOfSoundFromAltitude(altitude);
         double mach = pDemo->bullet.getVelocity() / machAtAltitude;
-        //cout << "mach: " << mach;
         double dragCoefficient = pDemo->physics.dragFromMach(mach);
         double surfaceArea = pDemo->physics.areaFromRadius(RADIUS);
 
         // Acceleration
-        // Expected: Distance: 19988.3m   Altitude: -1.50481m   Hang Time: 37.01s
         double ddx = pDemo->physics.forceFromDrag(dragCoefficient, airDensity, dx, pDemo->bullet.getVelocity(), surfaceArea) / SHELL_MASS;
 
         double ddy = pDemo->physics.gravityFromAltitude(altitude) +
             pDemo->physics.forceFromDrag(dragCoefficient, airDensity, dy, pDemo->bullet.getVelocity(), surfaceArea) / SHELL_MASS;
-
-        //cout << "\tddx/ddy: " << ddx  << "/" << ddy;
 
         // Velocity
         dx = pDemo->physics.computeVelocity(dx, ddx, INTERVAL);
@@ -157,10 +144,6 @@ void callBack(const Interface* pUI, void* p)
         velocity.setDy(dy);
 
         pDemo->bullet.updateVelocity(velocity);
-
-        //cout << "\dx/dy: " << dx << "/" << dy;
-
-       // velocity = physics.computeTotalComponent(dx, dy)
 
        // Calculate horizontal and vertical distance
        
@@ -172,8 +155,6 @@ void callBack(const Interface* pUI, void* p)
         position.setMetersY(altitude);
 
         pDemo->bullet.updatePosition(position);
-
-        //cout << "\tx/y: " << x << "/" << y << endl;
 
         // Update altitude
         // altitude = position.getMetersY();
@@ -227,34 +208,25 @@ void callBack(const Interface* pUI, void* p)
     // draw everything
     //
 
-    // ***************************************************************************************88
-    // TO-DO
     ogstream gout(Position(pDemo->ptUpperRight.getPixelsY() - 50.0, pDemo->ptUpperRight.getPixelsY() - 20.0));
 
     // draw the ground first
     pDemo->ground.draw(gout);
 
     // draw the howitzer
-    //gout.drawHowitzer(pDemo->ptHowitzer, pDemo->angle, pDemo->time);
     pDemo->howitzer.draw(gout, pDemo->time);
 
     // draw the projectile and its trail
     pDemo->bullet.draw(gout);
 
-
-    /* 
-    Draw the stats
-    */
-
-	// Draw the HUD
+	// Set decimal precision
     ogstream sout(Position(22000.0, 19500));
     sout.setf(ios::fixed | ios::showpoint);
 	sout.precision(2);
 
-    double horizontalDistanceTraveled = pDemo->bullet.getPosition().getMetersX() - pDemo->howitzer.getPosition().getMetersX();
 
-	// Set decimal precision
-	//gout.setf(ios::fixed);
+	// Draw the stats HUD
+    double horizontalDistanceTraveled = pDemo->bullet.getPosition().getMetersX() - pDemo->howitzer.getPosition().getMetersX();
     if (pDemo->bullet.getIsAirborne() == true)
     {
         sout << 
