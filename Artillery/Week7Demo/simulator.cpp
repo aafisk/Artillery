@@ -69,6 +69,7 @@ public:
     Howitzer howitzer;                  // Howitzer object
     Physics physics; // All the phyics and other calc
     double time;                        // amount of time since the last firing
+    int score = 0;
     
 };
 
@@ -196,6 +197,7 @@ void callBack(const Interface* pUI, void* p)
             double howitzerElevation = pDemo->ground.reset(pDemo->howitzer.getPosition());
             pDemo->howitzer.setVerticalPosition(howitzerElevation);
             pDemo->bullet.setTargetHit(false);
+            pDemo->score += 1;
 		}
     }
 
@@ -230,6 +232,7 @@ void callBack(const Interface* pUI, void* p)
     if (pDemo->bullet.getIsAirborne() == true)
     {
         sout << 
+            "Points:         " << pDemo->score << "\n" <<
             "Altitude:       " << pDemo->bullet.getPosition().getMetersY() << " m\n" <<
             "Speed:        " << pDemo->bullet.getVelocity() << " m/s\n"
             "Distance:     " << horizontalDistanceTraveled << " m\n"
@@ -237,7 +240,8 @@ void callBack(const Interface* pUI, void* p)
     }
     else
     {
-        sout << "Angle: " << pDemo->howitzer.getAngle() << endl;
+        sout << "Points: " << pDemo->score << endl;
+        sout << "Angle:  " << pDemo->howitzer.getAngle() << endl;
     }
 }
 
