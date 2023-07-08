@@ -2,13 +2,14 @@
  * 1. Name:
  *      The Key
  * 2. Assignment Name:
- *      Lab 08: M777 Howitzer
+ *      Lab 12: M777 Howitzer Complete
  * 3. Assignment Description:
  *      Simulate firing the M777 howitzer 15mm artillery piece
  * 4. What was the hardest part? Be as specific as possible.
- *      ??
+ *      The harderst part was getting all the physics to work
+ *      during the first week of this project
  * 5. How long did it take for you to complete the assignment?
- *      ??
+ *      4 hours ish
  *****************************************************************/
 
 #include <cassert>      // for ASSERT
