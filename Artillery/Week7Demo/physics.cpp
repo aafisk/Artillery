@@ -154,6 +154,21 @@ double Physics::radiansFromDegrees(double d)
     return r;
 }
 
+/*************************************************
+* DEGEES FROM RADIANS
+* Convert radians to degrees:
+*     radians / 2pi = degrees / 360
+* INPUT
+*     r : radians from 0 to 2pi
+* OUTPUT
+*     d : degrees from 0 to 360
+**************************************************/
+double Physics::degreesFromRadians(double r)
+{
+    double d = r * 180 / PI;
+    return d;
+}
+
 /************************************************
 * COMPUTE TOTAL COMPONENT
 * Given the horizontal and vertical components of

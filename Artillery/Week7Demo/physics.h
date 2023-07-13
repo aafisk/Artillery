@@ -22,6 +22,7 @@ public:
     double computeVerticalComponent(double a, double total);
     double computeHorizontalComponent(double a, double total);
     double radiansFromDegrees(double d);
+    double degreesFromRadians(double r);
     double computeTotalComponent(double x, double y);
     double computeVelocity(double v, double a, double t);
     double computeDistance(double s, double v, double a, double t);

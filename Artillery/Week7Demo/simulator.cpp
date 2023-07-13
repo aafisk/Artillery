@@ -1,8 +1,8 @@
 /*************************************************************
  * 1. Name:
- *      The Key
+ *      Aaron Fisk & Tim Orgill
  * 2. Assignment Name:
- *      Lab 12: M777 Howitzer Complete
+ *      M777 Howitzer Simulator Complete
  * 3. Assignment Description:
  *      Simulate firing the M777 howitzer 15mm artillery piece
  * 4. What was the hardest part? Be as specific as possible.
@@ -148,7 +148,6 @@ void callBack(const Interface* pUI, void* p)
         pDemo->bullet.updateVelocity(velocity);
 
        // Calculate horizontal and vertical distance
-       
         x = pDemo->physics.computeDistance(x, dx, ddx, INTERVAL);
         altitude = pDemo->physics.computeDistance(altitude, dy, ddy, INTERVAL);
 
@@ -157,24 +156,6 @@ void callBack(const Interface* pUI, void* p)
         position.setMetersY(altitude);
 
         pDemo->bullet.updatePosition(position);
-
-        // Update altitude
-        // altitude = position.getMetersY();
-
-        // hangTime += interval;
-
-        //// Previous and current distance for interpolation
-        //flightPath[0] = flightPath[1];
-        //flightPath[1] = position.getMetersX();
-
-        //// Previous and current altitude for interpolation
-        //flightPath[2] = flightPath[3];
-        //flightPath[3] = position.getMetersY();
-
-        //cout << "Distance: " << position.getMetersX() << " m"
-        //    << "\tAltitude: " << position.getMetersY() << " m"
-        //    << "\tHang Time: " << hangTime << " s" << endl;
-
      }
 
  
@@ -242,7 +223,7 @@ void callBack(const Interface* pUI, void* p)
     else
     {
         sout << "Points: " << pDemo->score << endl;
-        sout << "Angle:  " << pDemo->howitzer.getAngle() << endl;
+        sout << "Angle:  " << pDemo->physics.degreesFromRadians(pDemo->howitzer.getAngle()) << " deg" << endl;
     }
 }
 
